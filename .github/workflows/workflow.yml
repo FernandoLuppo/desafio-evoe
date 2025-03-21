@@ -30,9 +30,17 @@ jobs:
           MYSQL_USER=${{ secrets.MYSQL_USER }}
           EOF
 
+      - name: Install API dependencies
+        working-directory: ./api
+        run: yarn install --frozen-lockfile
+
       - name: Run API lint fix and format
         working-directory: ./api
         run: yarn lint:fix && yarn format
+
+      - name: Install Client dependencies
+        working-directory: ./client
+        run: yarn install --frozen-lockfile
 
       - name: Run Client lint fix and format
         working-directory: ./client
