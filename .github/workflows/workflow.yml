@@ -11,17 +11,6 @@ jobs:
   lint-format:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_ROOT_HOST: "%"
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,21 +29,6 @@ jobs:
           MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
           MYSQL_USER=${{ secrets.MYSQL_USER }}
           EOF
-
-      - name: Wait for MySQL
-        timeout-minutes: 1
-        run: |
-          echo "Waiting for MySQL to be ready..."
-          for i in {1..4}; do  # Aumente o número de tentativas
-            if mysqladmin ping -h mysql -P 3306 -u root -p${{ secrets.MYSQL_ROOT_PASSWORD }} --protocol=tcp --silent; then
-              echo "MySQL is ready!"
-              exit 0
-            fi
-            echo "Attempt $i/8: MySQL not ready. Retrying in 10 seconds..."
-            sleep 10
-          done
-          echo "MySQL failed to start within timeout"
-          exit 1
 
       - name: Run API lint fix and format
         working-directory: ./api
