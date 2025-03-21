@@ -29,7 +29,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "yarn"
+
+      - name: Create API .env file
+        working-directory: ./api
+        run: |
+          cat <<EOF > .env
+          PORT=${{ secrets.PORT }}
+          EOF
 
       - name: Wait for MySQL
         timeout-minutes: 1
