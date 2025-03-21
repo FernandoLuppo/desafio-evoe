@@ -20,6 +20,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_USER: ${{ secrets.MYSQL_USER }}
+          MYSQL_ROOT_HOST: "%"
 
     steps:
       - name: Checkout code
@@ -35,18 +36,21 @@ jobs:
         run: |
           cat <<EOF > .env
           PORT=${{ secrets.PORT }}
+          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+          MYSQL_USER=${{ secrets.MYSQL_USER }}
           EOF
 
       - name: Wait for MySQL
         timeout-minutes: 1
         run: |
           echo "Waiting for MySQL to be ready..."
-          for i in {1..4}; do 
-            if mysqladmin ping -h 127.0.0.1 -P 3306 -u root -p${{ secrets.MYSQL_ROOT_PASSWORD }} --silent; then
+          for i in {1..4}; do  # Aumente o número de tentativas
+            if mysqladmin ping -h mysql -P 3306 -u root -p${{ secrets.MYSQL_ROOT_PASSWORD }} --protocol=tcp --silent; then
               echo "MySQL is ready!"
               exit 0
             fi
-            echo "Attempt $i/4: MySQL not ready. Retrying in 10 seconds..."
+            echo "Attempt $i/8: MySQL not ready. Retrying in 10 seconds..."
             sleep 10
           done
           echo "MySQL failed to start within timeout"
