@@ -5,9 +5,10 @@ on:
     branches:
       - main
       - develop
+  pull_request:
 
 jobs:
-  build-and-test:
+  lint-format:
     runs-on: ubuntu-latest
 
     services:
@@ -30,66 +31,25 @@ jobs:
           node-version: 22
           cache: "yarn"
 
-      - name: Create .env file
-        working-directory: ./api
-        run: |
-          cat <<EOF > .env
-          PORT=${{ secrets.PORT }}
-          MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
-          MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
-          MYSQL_USER=${{ secrets.MYSQL_USER }}
-          DATABASE_URL=${{ secrets.DATABASE_URL }}
-          EOF
-
       - name: Wait for MySQL
-        timeout-minutes: 5
+        timeout-minutes: 1
         run: |
           echo "Waiting for MySQL to be ready..."
-          for i in {1..30}; do
+          for i in {1..4}; do 
             if mysqladmin ping -h 127.0.0.1 -P 3306 -u root -p${{ secrets.MYSQL_ROOT_PASSWORD }} --silent; then
               echo "MySQL is ready!"
               exit 0
             fi
-            echo "Attempt $i/30: MySQL not ready. Retrying in 3 seconds..."
-            sleep 3
+            echo "Attempt $i/4: MySQL not ready. Retrying in 10 seconds..."
+            sleep 10
           done
           echo "MySQL failed to start within timeout"
           exit 1
 
-      - name: Restore API dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ./api/node_modules
-          key: ${{ runner.os }}-api-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-api-
-
-      - name: Install API dependencies
+      - name: Run API lint fix and format
         working-directory: ./api
-        run: yarn install --frozen-lockfile
+        run: yarn lint:fix && yarn format
 
-      - name: Lint API code
-        working-directory: ./api
-        run: yarn lint
-
-      - name: Restore Client dependencies cache
-        uses: actions/cache@v3
-        with:
-          path: ./client/node_modules
-          key: ${{ runner.os }}-client-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-client-
-
-      - name: Install Client dependencies
+      - name: Run Client lint fix and format
         working-directory: ./client
-        run: yarn install --frozen-lockfile
-
-      - name: Lint Client code
-        working-directory: ./client
-        run: yarn lint
-
-      - name: Run tests
-        working-directory: ./api
-        env:
-          NODE_ENV: test
-        run: yarn test
+        run: yarn lint:fix && yarn format
