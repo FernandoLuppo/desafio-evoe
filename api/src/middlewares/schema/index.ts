@@ -10,6 +10,7 @@ const userData = yup.object().shape({
     .required("Email field is required.")
     .email("This field must be a valid email"),
   phoneNumber: yup.string().required("Phone Number field is required."),
+  color: yup.string().required("Color field is required."),
   description: yup
     .string()
     .required("Description field is required.")

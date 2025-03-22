@@ -1,5 +1,5 @@
 import { Response } from "express"
-import { STATUS_CODE } from "@src/constants"
+import { STATUS_CODE } from "../../constants"
 
 interface IHandleError {
   error: unknown | CustomError

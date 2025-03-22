@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 import { v4 as uuidv4 } from "uuid"
-import { IUser } from "@src/types"
-import { CustomError } from "@src/utils"
-import { STATUS_CODE } from "@src/constants"
+import { IUser } from "../../types"
+import { CustomError } from "../../utils"
+import { STATUS_CODE } from "../../constants"
 
 const prisma = new PrismaClient()
 
@@ -29,7 +29,8 @@ const userServices = {
       orderBy: { updatedAt: "desc" },
       select: {
         id: true,
-        name: true
+        name: true,
+        color: true
       }
     })
 

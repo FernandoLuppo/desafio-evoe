@@ -4,6 +4,7 @@ interface IUser {
   email: string
   phoneNumber: string
   description: string
+  color: string
 }
 
 export { IUser }

@@ -1,11 +1,11 @@
-import { userController } from "@src/controllers/UserController"
-import { auth } from "@src/middlewares/auth"
+import { userController } from "../../controllers/UserController"
+import { auth } from "../../middlewares/auth"
 import { Router } from "express"
 
 const userRouter = Router()
 
-userRouter.put("/user/save", auth.userData, userController.save)
+userRouter.put("/save", auth.userData, userController.save)
 userRouter.get("/list", userController.list)
-userRouter.get("/user/:_id", userController.getUser)
+userRouter.get("/:_id", userController.getUser)
 
 export { userRouter }

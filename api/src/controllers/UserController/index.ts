@@ -1,6 +1,6 @@
-import { STATUS_CODE } from "@src/constants"
-import { userServices } from "@src/services"
-import { handleError } from "@src/utils"
+import { STATUS_CODE } from "../../constants"
+import { userServices } from "../../services"
+import { handleError } from "../../utils"
 import { Request, Response } from "express"
 
 const userController = {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"
 import { userData } from "../schema"
-import { handleError } from "@src/utils"
+import { handleError } from "../../utils"
 
 const auth = {
   userData: async (req: Request, res: Response, next: NextFunction) => {
