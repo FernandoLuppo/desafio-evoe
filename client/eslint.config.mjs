@@ -30,7 +30,8 @@ export default [
     rules: {
       ...tsPlugin.configs.recommended.rules,
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "no-undef": "off"
+      "no-undef": "off",
+      "@typescript-eslint/no-explicit-any": "off"
     }
   },
   {
