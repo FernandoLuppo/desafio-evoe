@@ -1,16 +1,11 @@
-import { Request, Response, Router } from "express"
+import { userController } from "../../controllers/UserController"
+import { auth } from "../../middlewares/auth"
+import { Router } from "express"
 
 const userRouter = Router()
 
-userRouter.post("/create", (req: Request, res: Response) => {
-  try {
-    const message = "Hello World"
-    console.log({ message })
-    res.status(200).send({ success: true, message })
-  } catch (error) {
-    console.log(error)
-    res.status(500).send({ error, success: false })
-  }
-})
+userRouter.put("/save", auth.userData, userController.save)
+userRouter.get("/list", userController.list)
+userRouter.get("/:_id", userController.getUser)
 
 export { userRouter }
