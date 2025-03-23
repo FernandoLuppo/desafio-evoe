@@ -19,7 +19,7 @@ Olá, este é um projeto fullstack desenvolvido como um desafio da Evoé. No pro
 
 
 ## Links
-- video do projeto: https://www.youtube.com/watch?v=WhFx2heoFrA&t=1454s
+- video do projeto: https://www.youtube.com/watch?v=i_yyWqogx9Q
 - Documentação: http://localhost:${PORT}/api-documentation (acessar pela porta da API depois que o projeto estiver rodando)
 
 
