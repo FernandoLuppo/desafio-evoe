@@ -8,11 +8,7 @@ interface TextEditorProps {
   errors: FieldError | undefined
 }
 
-export default function TextEditor({
-  value,
-  onChange,
-  errors
-}: TextEditorProps) {
+export const TextEditor = ({ value, onChange, errors }: TextEditorProps) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-black-100">Descrição da Organização:</label>
@@ -23,7 +19,7 @@ export default function TextEditor({
         className="border rounded-md"
       />
       {errors && (
-        <p className="text-evou-red w-full mt-1 text-evoe-sm">
+        <p className="text-evoe-red w-full mt-1 text-evoe-sm">
           {errors.message}
         </p>
       )}

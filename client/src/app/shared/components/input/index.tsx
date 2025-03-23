@@ -30,7 +30,7 @@ export const Input = ({
         onChange={onChange}
       />
       {errors && (
-        <p className="text-evou-red w-full mt-1 text-evoe-sm">
+        <p className="text-evoe-red w-full mt-1 text-evoe-sm">
           {errors.message}
         </p>
       )}
