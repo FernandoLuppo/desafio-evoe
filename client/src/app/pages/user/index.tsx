@@ -32,7 +32,7 @@ export const User = () => {
           className="w-full min-h-screen"
           style={{ backgroundColor: color ?? "transparent" }}
         >
-          <div className="w-full sm:w-3/4 min-h-screen py-[6vw] mt-32 md:mt-20 bg-full-white flex flex-1 flex-col justify-center items-center px-[6vw] sm:rounded-l-[10px] shadow-[0px_3px_6px_rgba(0,0,0,0.16)] ml-auto">
+          <div className="w-full sm:w-3/4 min-h-screen md:py-[6vw] py-[35vw] bg-full-white flex flex-1 flex-col justify-center items-center px-[6vw] sm:rounded-l-[10px] shadow-[0px_3px_6px_rgba(0,0,0,0.16)] ml-auto">
             <motion.div
               className="py-[6vw]"
               variants={fadeInUp}
