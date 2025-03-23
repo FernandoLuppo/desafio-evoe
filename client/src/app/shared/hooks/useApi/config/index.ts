@@ -2,11 +2,10 @@ import type { AxiosInstance } from "axios"
 import axios from "axios"
 
 const api = (): AxiosInstance => {
-  // const apiUrl = process.env.VITE_API_URL
-  // console.log({ apiUrl })
+  const apiUrl = import.meta.env.VITE_API_URL
 
   return axios.create({
-    baseURL: "http://localhost:3001",
+    baseURL: apiUrl,
     withCredentials: true
   })
 }
