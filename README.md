@@ -25,12 +25,17 @@ Olá, este é um projeto fullstack desenvolvido como um desafio da Evoé. No pro
 
 ## Como usar
 
-Primeiramente, você precisa ter o Docker e o Docker Compose instalados. Em seguida, vá para o diretório raiz do projeto e execute o comando:
+Primeiramente, se quiser usar o Docker, você precisa ter o Docker e o Docker Compose instalados. Em seguida, vá para o diretório raiz do projeto e execute o comando:
 
 ```bash
 docker-compose up --build -d
 ```
 Verifique se os containers estão rodando; às vezes pode haver conflito de porta caso alguma já esteja em uso. Após isso, acesse o projeto pelo navegador em localhost:{sua porta}.
+
+Caso queira rodar sem o Docker, você precisará criar dois arquivos .env: um na pasta client e outro na pasta api. Copie o conteúdo do .env da raiz para esses arquivos e execute o projeto normalmente com o comando:
+```bash
+yarn dev
+```
 
 ## 📋 Lista
 
@@ -40,7 +45,7 @@ Essa página serve para visualizar os usuários cadastrados. Nela, você pode se
   <img src="https://private-user-images.githubusercontent.com/95176596/425863366-d0d02a67-ebaf-48b8-baeb-d0d91ecad9da.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDI3NjE2OTYsIm5iZiI6MTc0Mjc2MTM5NiwicGF0aCI6Ii85NTE3NjU5Ni80MjU4NjMzNjYtZDBkMDJhNjctZWJhZi00OGI4LWJhZWItZDBkOTFlY2FkOWRhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMjMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzIzVDIwMjMxNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFmYTkyOGRmN2M2Yjc5MzdkYTc4ODA1NjMyNDgwMzBlMGVlY2JkODZhMjgyNmYyMzNkYzVhZTJjNzVmOTNhZTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.2bGgKN6qKqAffhowQ04n2c4ADs746mbGk-_yanQ-ZoI" alt="Lista Page Mobile" />
 </div>
 
-## 💾 Save User
+## 💾 Salvar Usuário
 
 Esta é a página onde você pode criar ou editar um usuário. As duas funções dividem a mesma página, pois a construção de seus valores e seus endpoints são praticamente idênticos. Para evitar repetição de código, centralizei tudo em um PUT que, caso o usuário exista, edita suas informações; caso não exista, cria um novo.
 <div align="center">
