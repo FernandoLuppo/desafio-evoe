@@ -1,0 +1,276 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/user/save": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Cria ou atualiza um usuário",
+        "description": "Endpoint para criar ou atualizar informações do usuário usando upsert pelo email",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "name": "João Silva",
+                    "email": "joao@example.com",
+                    "phoneNumber": "11999999999",
+                    "color": "azul",
+                    "description": "Uma descrição detalhada com mais de 50 caracteres para atender a validação do campo."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário salvo com sucesso",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": true,
+                  "message": "User saved with success!"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Validation error",
+                  "errors": [
+                    "Name field must have at least 3 characters.",
+                    "This field must be a valid email"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/list": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Listar usuários",
+        "description": "Recupera lista de usuários ordenados pela última atualização (mais recente primeiro)",
+        "responses": {
+          "201": {
+            "description": "Lista de usuários recuperada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/UserList"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "success": true,
+                      "users": [
+                        {
+                          "id": "550e8400-e29b-41d4-a716-446655440000",
+                          "name": "João Silva",
+                          "color": "azul"
+                        },
+                        {
+                          "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+                          "name": "Maria Souza",
+                          "color": "vermelho"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/json": {
+                "example": {
+                  "success": false,
+                  "message": "Users not found!"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Obter detalhes de um usuário",
+        "description": "Recupera informações detalhadas de um usuário específico pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "ID único do usuário no formato UUID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Dados do usuário recuperados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "user": { "$ref": "#/components/schemas/UserDetail" }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "success": true,
+                      "user": {
+                        "id": "550e8400-e29b-41d4-a716-446655440000",
+                        "name": "João Silva",
+                        "email": "joao@example.com",
+                        "phoneNumber": "11999999999",
+                        "description": "Uma descrição detalhada com mais de 50 caracteres...",
+                        "color": "azul"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "required": ["name", "email", "phoneNumber", "color", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID único do usuário (opcional para upsert)"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Nome completo do usuário"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Endereço de e-mail válido"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Número de telefone com DDD"
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor preferida do usuário"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 50,
+            "description": "Descrição detalhada com mínimo de 50 caracteres"
+          }
+        }
+      },
+      "UserList": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID único do usuário"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário"
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor preferida do usuário"
+          }
+        }
+      },
+      "UserDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID único do usuário"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome completo do usuário"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "E-mail válido do usuário"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "Número de telefone com DDD"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição detalhada do usuário"
+          },
+          "color": {
+            "type": "string",
+            "description": "Cor preferida do usuário"
+          }
+        }
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Erro interno do servidor",
+        "content": {
+          "application/json": {
+            "example": {
+              "success": false,
+              "message": "Users not found!"
+            }
+          }
+        }
+      }
+    }
+  }
+}
