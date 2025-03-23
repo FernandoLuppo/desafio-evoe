@@ -2,10 +2,12 @@ import { useEffect, useState } from "react"
 import { useUser } from "../../shared/hooks"
 import { useParams } from "react-router-dom"
 import DOMPurify from "dompurify"
-import { Button } from "../../shared/components"
+import { Button, Header } from "../../shared/components"
 import { Support } from "./components"
 import { COLORS } from "../../shared/components/dropdown/constants"
 import { IUser } from "../../shared/types"
+import { fadeInUp } from "../../shared/css"
+import { motion } from "framer-motion"
 
 export const User = () => {
   const { id } = useParams<{ id: string }>()
@@ -24,13 +26,19 @@ export const User = () => {
 
   return (
     <>
+      <Header showNav={false} />
       {user?.name ? (
         <section
           className="w-full min-h-screen"
           style={{ backgroundColor: color ?? "transparent" }}
         >
           <div className="w-full sm:w-3/4 min-h-screen bg-full-white flex flex-1 flex-col justify-center items-center px-[6vw] sm:rounded-l-[10px] shadow-[0px_3px_6px_rgba(0,0,0,0.16)] ml-auto">
-            <div className="py-[6vw]">
+            <motion.div
+              className="py-[6vw]"
+              variants={fadeInUp}
+              initial="hidden"
+              animate="show"
+            >
               <h1 className="text-evoe-3xl mb-6 font-bold text-black-60">
                 {user.name}
               </h1>
@@ -54,7 +62,7 @@ export const User = () => {
                 <span className="text-full-black">{user.phoneNumber}</span> caso
                 precise de mais informações.
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
       ) : (

@@ -4,6 +4,8 @@ import { handleForm, handlePhoneChange, submitData } from "../../functions"
 import { useNavigate } from "react-router-dom"
 import { TextEditor } from "./components/"
 import { useEffect } from "react"
+import { fadeInUp } from "../../../../shared/css"
+import { motion } from "framer-motion"
 
 interface IForm {
   user: IUser | null
@@ -50,9 +52,12 @@ export const Form = ({ user, setUser }: IForm) => {
   }
 
   return (
-    <form
+    <motion.form
       onSubmit={handleSubmit(handleSubmitData)}
-      className="w-full 2xl:w-[900px] py-[6vw] flex flex-col gap-5 text-black-60"
+      className="w-full 2xl:w-[900px] py-[6vw] mt-32 md:mt-20 flex flex-col gap-5 text-black-60"
+      variants={fadeInUp}
+      initial="hidden"
+      animate="show"
     >
       <h1 className="text-evoe-3xl mb-10">
         Insira as Informações da Organização
@@ -117,6 +122,6 @@ export const Form = ({ user, setUser }: IForm) => {
       />
 
       <Button label="Salvar" disabled={isSubmitting} color="black" full />
-    </form>
+    </motion.form>
   )
 }
