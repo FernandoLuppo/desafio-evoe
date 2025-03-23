@@ -7,15 +7,23 @@ interface ISaveUserBody extends ISubmitData {
   body: ISaveUserFormValue
 }
 
-const handleForm = () => {
-  const defaultValues = {
+interface HandleFormProps {
+  defaultValues?: ISaveUserFormValue
+}
+
+const handleForm = ({ defaultValues }: HandleFormProps = {}) => {
+  const emptyValues = {
     name: "",
     email: "",
     phoneNumber: "",
-    description: ""
+    description: "",
+    color: ""
   }
 
-  const form = useAuthForm({ defaultValues, authSchema: userDataSchema })
+  const form = useAuthForm({
+    defaultValues: defaultValues || emptyValues,
+    authSchema: userDataSchema
+  })
   return {
     ...form,
     errors: form.formState.errors,
@@ -32,7 +40,7 @@ const submitData = async ({ reset, navigate, body }: ISaveUserBody) => {
     if (!response.data.success) return window.alert(response.error as string)
 
     window.alert(response.data.message)
-    return navigate("/list")
+    return navigate("/")
   } catch (error) {
     console.log(error)
   } finally {

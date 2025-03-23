@@ -43,14 +43,16 @@ const userServices = {
     return { users }
   },
 
-  getUser: async (data: IUser) => {
+  getUser: async (id: string) => {
     const user = await prisma.user.findUnique({
-      where: { id: data.id },
+      where: { id },
       select: {
         id: true,
         name: true,
+        email: true,
         phoneNumber: true,
-        description: true
+        description: true,
+        color: true
       }
     })
 

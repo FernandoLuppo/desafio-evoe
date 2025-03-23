@@ -13,11 +13,32 @@ html {
   background-color: #fdfdfc;
 }
 
+/* Editor */
 .ql-container {
   min-height: 300px !important;
   height: auto !important;
 }
-
 .ql-editor {
   min-height: 300px !important;
+}
+
+/* dangerouslySetInnerHTML */
+#userDescription {
+  color: #717272;
+}
+
+#userDescription > h1 {
+  font-size: 2rem;
+  font-family: "Inconsolata", monospace !important;
+}
+#userDescription > h2 {
+  font-size: 1.5rem;
+  font-family: "Inconsolata", monospace !important;
+}
+#userDescription > h3 {
+  font-size: 1.25rem;
+  font-family: "Inconsolata", monospace !important;
+}
+#userDescription > p {
+  font-family: "Inconsolata", monospace !important;
 }

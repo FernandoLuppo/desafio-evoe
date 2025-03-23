@@ -6,6 +6,6 @@ const userRouter = Router()
 
 userRouter.put("/save", auth.userData, userController.save)
 userRouter.get("/list", userController.list)
-userRouter.get("/:_id", userController.getUser)
+userRouter.get("/:id", userController.getUser)
 
 export { userRouter }

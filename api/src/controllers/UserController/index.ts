@@ -27,8 +27,8 @@ const userController = {
 
   getUser: async (req: Request, res: Response) => {
     try {
-      const data = req.body
-      const { user } = await userServices.getUser(data)
+      const data = req.params
+      const { user } = await userServices.getUser(data.id)
 
       res.status(STATUS_CODE.CREATED).send({ success: true, user })
     } catch (error) {
