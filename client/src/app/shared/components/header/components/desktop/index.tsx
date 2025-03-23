@@ -6,7 +6,7 @@ export const DesktopNav = () => {
       <ul>
         <li>
           <a href="/save-user">
-            <Button color="white" label="Crie seu projeto" />
+            <Button buttonType="secondary" label="Crie seu projeto" />
           </a>
         </li>
       </ul>

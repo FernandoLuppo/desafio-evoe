@@ -22,11 +22,10 @@ html {
   min-height: 300px !important;
 }
 
-/* dangerouslySetInnerHTML */
+/* angerouslySetInnerHTML */
 #userDescription {
   color: #717272;
 }
-
 #userDescription > h1 {
   font-size: 2rem;
   font-family: "Inconsolata", monospace !important;
