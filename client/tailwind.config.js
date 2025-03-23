@@ -9,12 +9,13 @@ module.exports = {
         "black-40": "#A0A1A1",
         "black-20": "#CFD0D0",
         "full-white": "#FFFFFF",
-        "evoe-purple": "#2E329D",
+        "evoe-blue": "#2E329D",
         "evoe-yellow": "#febd0e",
-        "evou-red": "#ed1e23"
+        "evoe-red": "#ed1e23"
       },
       fontFamily: {
-        syne: ["Syne", "sans-serif"]
+        syne: ["Syne", "sans-serif"],
+        inconsolata: ["Inconsolata", "sans-serif"]
       },
       fontSize: {
         "evoe-xs": "0.75rem",

@@ -1,11 +1,18 @@
 import { Button, Input, DropDown } from "../../../../shared/components"
-import { ISaveUserFormValue } from "../../../../shared/types"
+import { ISaveUserFormValue, IUser } from "../../../../shared/types"
 import { handleForm, handlePhoneChange, submitData } from "../../functions"
 import { useNavigate } from "react-router-dom"
-import TextEditor from "./components/textEditor"
+import { TextEditor } from "./components/"
+import { useEffect } from "react"
 
-export const Form = () => {
+interface IForm {
+  user: IUser | null
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>
+}
+
+export const Form = ({ user, setUser }: IForm) => {
   const navigate = useNavigate()
+
   const {
     errors,
     handleSubmit,
@@ -14,11 +21,33 @@ export const Form = () => {
     reset,
     watch,
     setValue
-  } = handleForm()
+  } = handleForm({ defaultValues: user || undefined })
   const handleSubmitData = async (body: ISaveUserFormValue) =>
     await submitData({ reset, navigate, body })
   const phoneNumberValue = watch("phoneNumber")
   const descriptionValue = watch("description")
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        description: user.description,
+        color: user.color
+      })
+    }
+  }, [user, reset])
+
+  const handleInputChange = (field: keyof IUser, value: string) => {
+    setUser(prevUser => {
+      if (!prevUser) return null
+      return {
+        ...prevUser,
+        [field]: value
+      }
+    })
+  }
 
   return (
     <form
@@ -34,6 +63,8 @@ export const Form = () => {
         errors={errors.name}
         register={{ ...register("name") }}
         placeholder="Nome:"
+        value={user?.name}
+        onChange={e => handleInputChange("name", e.target.value)}
       />
       <Input
         label="Insira o e-mail de contato:"
@@ -42,6 +73,8 @@ export const Form = () => {
         register={{ ...register("email") }}
         placeholder="Email:"
         type="email"
+        value={user?.email}
+        onChange={e => handleInputChange("email", e.target.value)}
       />
       <Input
         label="Digite o número de celular para contato:"
@@ -56,8 +89,11 @@ export const Form = () => {
             }
           })
         }}
-        value={phoneNumberValue || ""}
-        onChange={e => handlePhoneChange(e, setValue)}
+        value={user?.phoneNumber || phoneNumberValue || ""}
+        onChange={e => {
+          handleInputChange("phoneNumber", e.target.value)
+          handlePhoneChange(e, setValue)
+        }}
         placeholder="Celular:"
         maxLength={12}
       />
@@ -67,11 +103,16 @@ export const Form = () => {
         id="color"
         errors={errors.color}
         register={{ ...register("color") }}
+        value={user?.color}
+        onChange={e => handleInputChange("color", e.target.value)}
       />
 
       <TextEditor
-        value={descriptionValue}
-        onChange={value => setValue("description", value)}
+        value={user?.description || descriptionValue}
+        onChange={value => {
+          handleInputChange("description", value)
+          setValue("description", value)
+        }}
         errors={errors.description}
       />
 

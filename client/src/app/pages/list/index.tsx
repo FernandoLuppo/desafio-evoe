@@ -3,6 +3,7 @@ import { BiSolidEdit } from "react-icons/bi"
 import { useApi } from "../../shared/hooks"
 import { Header } from "../../shared/components"
 import { COLORS } from "../../shared/components/dropdown/constants"
+import { IUser } from "../../shared/types"
 
 export const List = () => {
   const [loading, setLoading] = useState(true)
@@ -28,15 +29,14 @@ export const List = () => {
   return (
     <>
       <Header />
-      <section className="m-auto mt-48 max-w-[78.125rem] px-4">
+      <section className="m-auto mt-48 max-w-[78.125rem] px-4 pb-[1.875rem] ">
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div className="flex flex-wrap gap-[1.875rem] justify-center">
-            {list?.map((item: { name: string; id: string; color: string }) => {
-              const selectColor = COLORS.find(color =>
-                color.value === item.color ? color.color : ""
-              )
+          <div className="flex flex-wrap gap-[1.875rem] justify-center ">
+            {list?.map((item: Pick<IUser, "name" | "id" | "color">) => {
+              const selectColor =
+                COLORS.find(color => color.value === item.color)?.color || ""
               return (
                 <a
                   href={`/user/${item.id}`}
@@ -44,15 +44,15 @@ export const List = () => {
                   className="flex-none"
                 >
                   <div
-                    className="w-[23.375rem] h-[25rem] shadow-[0px_1px_3px_rgba(0,0,0,0.16)] rounded-[10px] px-8 py-6 flex flex-col justify-between"
-                    style={{ backgroundColor: selectColor?.color }}
+                    className="w-[19.4375rem] h-[25rem] md:w-[23.375rem] md:h-[25rem] shadow-[0px_1px_3px_rgba(0,0,0,0.16)] rounded-[10px] px-8 py-6 flex flex-col justify-between"
+                    style={{ backgroundColor: selectColor }}
                   >
                     <a href={`/save-user/${item.id}`} className="self-end">
                       <button className="p-1 bg-full-white w-fit rounded-[10px] shadow-[0px_1px_3px_rgba(0,0,0,0.16)]">
                         <BiSolidEdit size={30} />
                       </button>
                     </a>
-                    <h3 className="mt-auto mb-20 text-full-white text-evoe-3xl">
+                    <h3 className="mt-auto mb-20 text-full-white text-evoe-3xl line-clamp-3">
                       <strong>{item.name}</strong>
                     </h3>
                   </div>

@@ -35,7 +35,7 @@ export const DropDown = ({
         ))}
       </select>
       {errors && (
-        <p className="text-evou-red w-full mt-1 text-evoe-sm">
+        <p className="text-evoe-red w-full mt-1 text-evoe-sm">
           {errors.message}
         </p>
       )}
