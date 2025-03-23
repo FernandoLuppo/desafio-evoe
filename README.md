@@ -15,6 +15,7 @@ Olá, este é um projeto fullstack desenvolvido como um desafio da Evoé. No pro
 - MySQL
 - Docker
 - GitHub Actions
+- Swagger
 
 
 ## Links
